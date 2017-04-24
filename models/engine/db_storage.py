@@ -35,6 +35,19 @@ class DBStorage:
         if getenv('HBNB_MYSQL_ENV', 'not') == 'test':
             Base.metadata.drop_all(self.__engine)
 
+    def count(self, cls=None):
+        """
+        return the number of objects (in a class if one is given)
+        """
+        return len(self.all(cls))
+
+    def get(self, cls, id):
+        """
+        get an object based on its class and id
+        """
+        obj = self.all(cls)
+        return obj[id]
+
     def all(self, cls=None):
         """
         returns a dictionary of all the class objects
@@ -76,7 +89,8 @@ class DBStorage:
         be in the init method
         """
         Base.metadata.create_all(self.__engine)
-        self.__session = scoped_session(sessionmaker(bind=self.__engine))
+        self.__session = scoped_session(sessionmaker(bind=self.__engine,
+                                                     expire_on_commit=False))
 
     def close(self):
         """
