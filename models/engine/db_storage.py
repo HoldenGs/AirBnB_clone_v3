@@ -35,6 +35,12 @@ class DBStorage:
         if getenv('HBNB_MYSQL_ENV', 'not') == 'test':
             Base.metadata.drop_all(self.__engine)
 
+    def count(self, cls=None):
+        """
+        return the number of objects (in a class if one is given)
+        """
+        return len(self.all(cls))
+
     def get(self, cls, id):
         """
         get an object based on its class and id
