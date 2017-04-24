@@ -35,6 +35,13 @@ class DBStorage:
         if getenv('HBNB_MYSQL_ENV', 'not') == 'test':
             Base.metadata.drop_all(self.__engine)
 
+    def get(self, cls, id):
+        """
+        get an object based on its class and id
+        """
+        obj = self.all(cls)
+        return obj[id]
+
     def all(self, cls=None):
         """
         returns a dictionary of all the class objects
