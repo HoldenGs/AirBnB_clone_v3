@@ -42,6 +42,19 @@ class FileStorage:
                                    "State": State}
         self.reload()
 
+    def count(self, cls=None):
+        """
+        count the number of objects (in a class if given)
+        """
+        return len(self.all(cls))
+
+    def get(self, cls, id):
+        """
+        get a specific object using class and id
+        """
+        obj = all(cls)
+        return obj[id]
+
     def all(self, cls=None):
         """
         Returns the required objects
