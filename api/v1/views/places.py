@@ -42,7 +42,7 @@ def place_delete(place_id=None):
                  strict_slashes=False)
 def place_add(city_id=None):
     city = storage.get('City', city_id)
-    if state is None:
+    if city is None:
         abort(404)
     data = request.get_json()
     if data is None:
@@ -50,10 +50,11 @@ def place_add(city_id=None):
     keys = data.keys()
     if 'user_id' not in keys:
         return 'Missing user_id', 400
-    if storage.get('User', user_id) is None:
+    if storage.get('User', data['user_id']) is None:
         abort(404)
     if 'name' not in keys:
         return 'Missing name', 400
+    data['city_id'] = city_id
     place = Place(**data)
     place.save()
     return jsonify(place.to_json()), 201
