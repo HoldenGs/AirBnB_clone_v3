@@ -43,9 +43,7 @@ def user_add():
     if data is None:
         return 'Not a JSON', 400
     keys = data.keys()
-    if 'name' not in keys:
-        return 'Missing name', 400
-    elif 'email' not in keys:
+    if 'email' not in keys:
         return 'Missing email', 400
     elif 'password' not in keys:
         return 'Missing password', 400
