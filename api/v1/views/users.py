@@ -6,7 +6,6 @@ Users Route
 
 from api.v1.views import app_views
 from flask import jsonify, abort, request
-from hashlib import md5
 from models import storage, User
 
 
@@ -48,7 +47,6 @@ def user_add():
         return 'Missing email', 400
     elif 'password' not in keys:
         return 'Missing password', 400
-    data['password'] = md5(data['password'].encode('utf-8'))
     user = User(**data)
     user.save()
     return jsonify(user.to_json()), 201
@@ -68,6 +66,5 @@ def user_update(user_id=None):
     for k, v in data.items():
         if k not in ('id', 'created_at', 'updated_at', 'email'):
             setattr(user, k, v)
-    data['password'] = md5(data['password'].encode('utf-8'))
     user.save()
     return jsonify(user.to_json())
