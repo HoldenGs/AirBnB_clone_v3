@@ -92,7 +92,7 @@ class BaseModel:
         if ("updated_at" in dupe):
             dupe["updated_at"] = dupe["updated_at"].isoformat()
         dupe["__class__"] = type(self).__name__
-        if getenv('HBNB_TYPE_STORAGE', 'fs') != 'db':
+        if getenv('HBNB_TYPE_STORAGE', 'db') != 'fs':
             dupe.pop('password', None)
         return dupe
 
