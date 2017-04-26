@@ -12,7 +12,6 @@ from os import getenv
 from sqlalchemy.orm import relationship, backref
 
 
-
 class User(BaseModel, Base):
     """
     User class
