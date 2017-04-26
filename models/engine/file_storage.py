@@ -46,6 +46,8 @@ class FileStorage:
         """
         count the number of objects (in a class if given)
         """
+        if cls is None:
+            return len(self.all())
         return len(self.all(cls))
 
     def get(self, cls, id):
