@@ -48,7 +48,7 @@ def user_add():
     elif 'password' not in keys:
         return 'Missing password', 400
     user = User(**data)
-    state.save()
+    user.save()
     return jsonify(user.to_json()), 201
 
 
