@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-Cities Route
+Reviews Route
 """
 
 from api.v1.views import app_views
