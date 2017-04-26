@@ -6,8 +6,8 @@ user module
         The User Class inherts from BaseModel, Base
 """
 
-from models.base_model import BaseModel, Base, Table, Column, String
 from hashlib import md5
+from models.base_model import BaseModel, Base, Table, Column, String
 from os import getenv
 from sqlalchemy.orm import relationship, backref
 
