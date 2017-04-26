@@ -1,12 +1,16 @@
 #!/usr/bin/python3
-from models.base_model import BaseModel, Base, Table, Column, String
-from sqlalchemy.orm import relationship, backref
-from os import getenv
+
 """
 user module
     contains
         The User Class inherts from BaseModel, Base
 """
+
+from models.base_model import BaseModel, Base, Table, Column, String
+from hashlib import md5
+from os import getenv
+from sqlalchemy.orm import relationship, backref
+
 
 
 class User(BaseModel, Base):
@@ -31,4 +35,6 @@ class User(BaseModel, Base):
         """
         initializes from BaseModel
         """
+        hashed = kwargs['password'].encode('utf-8')
+        kwargs['password'] = md5(hashed).hexdigest()
         super().__init__(*args, **kwargs)
