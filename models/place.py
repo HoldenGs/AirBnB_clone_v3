@@ -43,6 +43,8 @@ class Place(BaseModel, Base):
         longitude = Column(Float, nullable=True)
         amenities = relationship("Amenity", secondary="place_amenity",
                                  viewonly=True)
+        reviews = relationship("Review", backref='place',
+                               cascade='all, delete, delete-orphan')
     else:
         city_id = ""
         user_id = ""
@@ -62,3 +64,14 @@ class Place(BaseModel, Base):
         Inherts from BaseClass
         """
         super().__init__(*args, **kwargs)
+
+    if getenv('HBNB_TYPE_STORAGE', 'fs') != 'db':
+        @property
+        def reviews(self):
+            """
+            returns all cities in a State
+            """
+            all_reviews = models.storage.all("Review").values()
+            result = [review for review in all_reviews
+                      if review.place_id == self.id]
+            return result
