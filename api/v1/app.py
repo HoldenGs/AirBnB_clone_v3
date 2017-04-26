@@ -16,7 +16,7 @@ app.register_blueprint(app_views)
 @app.errorhandler(404)
 def handle_404(exception):
     error = {"error": "Not found"}
-    return jsonify(error)
+    return jsonify(error), 404
 
 
 @app.teardown_appcontext
