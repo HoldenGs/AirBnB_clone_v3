@@ -12,17 +12,14 @@ place module
 """
 
 
-class PlaceAmenity(Base):
-    """
-    PlaceAmenity class designed to link table places and table amenities
-    of the SQLAlchmeny
-    """
-    if getenv('HBNB_TYPE_STORAGE', 'fs') == 'db':
-        __tablename__ = "place_amenity"
-        place_id = Column(String(60), ForeignKey('places.id'),
-                          primary_key=True, nullable=False)
-        amenity_id = Column(String(60), ForeignKey('amenities.id'),
-                            primary_key=True, nullable=False)
+if getenv('HBNB_TYPE_STORAGE', 'fs') == 'db':
+    place_amenity = Table('place_amenity', Base.metadata,
+                          Column('place_id', String(60),
+                                 ForeignKey('places.id'),
+                                 primary_key=True, nullable=False),
+                          Column('amenity_id', String(60),
+                                 ForeignKey('amenities.id'),
+                                 primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -41,8 +38,7 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, default=0, nullable=False)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        amenities = relationship("Amenity", secondary="place_amenity",
-                                 viewonly=True)
+        amenities = relationship("Amenity", secondary="place_amenity")
         reviews = relationship("Review", backref='place',
                                cascade='all, delete, delete-orphan')
     else:
@@ -74,4 +70,15 @@ class Place(BaseModel, Base):
             all_reviews = models.storage.all("Review").values()
             result = [review for review in all_reviews
                       if review.place_id == self.id]
+            return result
+
+    if getenv('HBNB_TYPE_STORAGE', 'fs') != 'db':
+        @property
+        def amenities(self):
+            """
+            returns all cities in a State
+            """
+            amenities = models.storage.all("Amenity").values()
+            result = [amenity for amenity in amenities
+                      if amenity.place_id == self.id]
             return result
