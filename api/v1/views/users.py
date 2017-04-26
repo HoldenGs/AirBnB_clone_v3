@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
 """
-Amenities Route
+Users Route
 """
 
 from api.v1.views import app_views
 from flask import jsonify, abort, request
-from models import storage, State
+from models import storage, User
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
