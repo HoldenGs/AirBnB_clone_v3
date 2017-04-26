@@ -46,7 +46,10 @@ class DBStorage:
         get an object based on its class and id
         """
         obj = self.all(cls)
-        return obj[id]
+        try:
+            return obj[id]
+        except:
+            return None
 
     def all(self, cls=None):
         """

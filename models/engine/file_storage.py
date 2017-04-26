@@ -53,7 +53,10 @@ class FileStorage:
         get a specific object using class and id
         """
         obj = all(cls)
-        return obj[id]
+        try:
+            return obj[id]
+        except:
+            return None
 
     def all(self, cls=None):
         """
